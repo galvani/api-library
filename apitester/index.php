@@ -6,6 +6,9 @@ require dirname(__DIR__).'/vendor/autoload.php';
 
 use Mautic\Auth\OAuthClient;
 
+
+error_reporting(E_ALL);
+
 $auth = (isset($_POST['auth'])) ? $_POST['auth'] : @$_SESSION['auth'];
 if (empty($auth)) {
     $auth = 'OAuth1a';

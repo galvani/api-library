@@ -2,7 +2,10 @@ FROM php:7.2-fpm
 
 MAINTAINER Jan Kozak <galvani78@gmail.com>
 
-COPY web.pool.conf  /usr/local/etc/
+
+RUN rm /usr/local/etc/php-fpm.d/zz-docker.conf
+RUN rm /usr/local/etc/php-fpm.d/www.conf
+COPY www.conf  /usr/local/etc/php-fpm.d/www.conf
 
 RUN usermod -u 1000 www-data
 
@@ -11,5 +14,5 @@ RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60e
 RUN php composer-setup.php --install-dir=/usr/bin && chmod 755 /usr/bin/composer.phar
 RUN php -r "unlink('composer-setup.php');"
 
-EXPOSE 9000
+EXPOSE 9009
 CMD ["php-fpm", "-F"]
